@@ -1,5 +1,5 @@
 /**
- * Image Utilities — Agrima
+ * Image Utilities
  *
  * Gallery image resolution for folder-based post structure.
  * Reads from src/content/posts/{postDir}/gallery/

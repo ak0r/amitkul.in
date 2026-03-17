@@ -99,7 +99,7 @@ Use semantic CSS classes over inline Tailwind utilities.
 Define semantic classes in components/base/theme css files under `src/styles/*.css` using `@apply`.
 
 ### When to use semantic classes
-- Layout patterns (post-content, post-meta, page-header)
+- Layout patterns (post-content, post-meta, content-header)
 - Typography groups
 - Recurring component patterns (tag, tag-list, pagination)
 

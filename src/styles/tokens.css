@@ -1,4 +1,14 @@
 :root {
   --width-container: 960px;
   --width-prose:     680px;
+  --color-clay:    #d97757;   /* primary accent — links, focus, CTA */
+  --color-oat:     #e3dacc;   /* warm sand — secondary surfaces */
+  --color-olive:   #788c5d;   /* muted green — travel type */
+  --color-cactus:  #bcd1ca;   /* soft teal */
+  --color-sky:     #6a9bcc;   /* muted blue — tech type */
+  --color-heather: #cbcadb;   /* soft lavender */
+  --color-fig:     #c46686;   /* muted rose */
+  --color-coral:   #ebcece;   /* pale pink */
+  --color-focus:   #2c84db;   /* system focus ring */
+  --color-error:   #bf4d43;   /* error state */
 }

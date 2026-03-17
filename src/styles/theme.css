@@ -107,4 +107,7 @@
   --font-sans: var(--font-primary);
   --font-mono: var(--font-code);
   --font-serif: var(--font-secondary);
+
+  --color-travel: var(--color-olive);
+  --color-tech: var(--color-sky);
 }

@@ -138,7 +138,7 @@
   }
 
   .footer-copy {
-    @apply text-xs text-secondary-foreground m-0;
+    @apply text-sm text-muted-foreground m-0;
   }
 
   .footer-nav {
@@ -226,7 +226,7 @@
   }
 
   .series-nav__item--current .series-nav__item-title {
-    @apply text-muted-foreground italic;
+    @apply text-muted-foreground italic font-semibold;
   }
 
   .series-nav__pagination {
@@ -262,8 +262,8 @@
     --pagefind-ui-background:    var(--background);
     --pagefind-ui-border:        var(--border);
     --pagefind-ui-border-width:  1px;
-    --pagefind-ui-border-radius: var(--radius);
-    --pagefind-ui-tag:           var(--background-subtle);
+    --pagefind-ui-border-radius: 0.5rem;
+    --pagefind-ui-tag:           var(--color-muted-foreground);
     --pagefind-ui-font:          var(--font-primary);
   }
 
@@ -403,5 +403,29 @@
 
   .glightbox-clean .gslide-desc {
     @apply text-muted-foreground;
+  }
+
+  /* ── 404 ────────────────────────────────────────── */
+  .not-found {
+    @apply flex flex-col items-start gap-4 py-16;
+  }
+
+  .not-found-code {
+    @apply text-4xl font-semibold text-muted-foreground m-0 leading-none;
+  }
+
+  .not-found h1 {
+    @apply m-0;
+  }
+
+  .not-found-message {
+    @apply text-muted-foreground m-0;
+    max-width: 38ch;
+  }
+
+  .back-link {
+    @apply text-muted-foreground text-sm;
+    &:hover { @apply text-foreground; }
+    &::after { content: none !important; }
   }
 }

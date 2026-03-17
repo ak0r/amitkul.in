@@ -18,6 +18,6 @@ const { entry } = Astro.props;
 const { Content } = await render(entry);
 ---
 
-<BlogLayout {entry}>
+<BlogLayout {entry} data-pagefind-body>
   <Content />
 </BlogLayout>

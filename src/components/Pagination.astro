@@ -26,53 +26,18 @@ if (lastPage <= 1) return;
 
 <nav class="pagination" aria-label="Pagination">
   {url.prev ? (
-    <a href={url.prev} class="pagination-link">← Newer</a>
+    <a href={url.prev} class="pagination__link">← Newer</a>
   ) : (
-    <span class="pagination-link is-disabled" aria-hidden="true">← Newer</span>
+    <span class="pagination__link pagination__link--disabled" aria-hidden="true">← Newer</span>
   )}
 
-  <span class="pagination-info" aria-label={`Page ${currentPage} of ${lastPage}`}>
+  <span class="pagination__info" aria-label={`Page ${currentPage} of ${lastPage}`}>
     {currentPage} / {lastPage}
   </span>
 
   {url.next ? (
-    <a href={url.next} class="pagination-link">Older →</a>
+    <a href={url.next} class="pagination__link">Older →</a>
   ) : (
-    <span class="pagination-link is-disabled" aria-hidden="true">Older →</span>
+    <span class="pagination__link pagination__link--disabled" aria-hidden="true">Older →</span>
   )}
 </nav>
-
-<style>
-  .pagination {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding-top: 2rem;
-    margin-top: 1rem;
-    border-top: 1px solid var(--border);
-  }
-
-  .pagination-link {
-    font-size: var(--text-sm);
-    text-decoration: none;
-    color: var(--foreground);
-
-    &:hover {
-      text-decoration: underline;
-      text-underline-offset: 3px;
-    }
-
-    &::after { content: none !important; }
-
-    &.is-disabled {
-      color: var(--foreground-subtle);
-      cursor: default;
-      pointer-events: none;
-    }
-  }
-
-  .pagination-info {
-    font-size: var(--text-xs);
-    color: var(--foreground-subtle);
-  }
-</style>

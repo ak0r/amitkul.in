@@ -14,11 +14,11 @@ const contentWidth = siteConfig.pageWidth || 'lg';
 
 <header class="site-header">
   <Container setWidth={contentWidth}>
-    <nav class="site-nav">
-      <a href="/" aria-label={`${siteConfig.title} home`} class="brand">{siteConfig.title}</a>
+    <nav class="site-header__nav">
+      <a href="/" aria-label={`${siteConfig.title} home`} class="site-header__brand">{siteConfig.title}</a>
 
       <!-- Desktop nav links -->
-      <div class="nav-desktop">
+      <div class="site-header__desktop">
         {siteConfig.navigation.map((item) => (
           <a
             href={item.url}
@@ -31,7 +31,7 @@ const contentWidth = siteConfig.pageWidth || 'lg';
       </div>
 
       <!-- Theme toggle + hamburger (grouped right) -->
-      <div class="nav-end">
+      <div class="site-header__end">
         <button
           id="theme-toggle"
           class="theme-toggle"
@@ -49,7 +49,7 @@ const contentWidth = siteConfig.pageWidth || 'lg';
 
         <button
           id="nav-toggle"
-          class="nav-mobile-toggle"
+          class="site-header__mobile-toggle"
           aria-label="Toggle menu"
           aria-expanded="false"
           aria-controls="nav-mobile"
@@ -59,7 +59,7 @@ const contentWidth = siteConfig.pageWidth || 'lg';
   </Container>
 
   <!-- Mobile dropdown -->
-  <div id="nav-mobile" class="nav-mobile" hidden>
+  <div id="nav-mobile" class="site-header__mobile" hidden>
     <div class="container">
       {siteConfig.navigation.map((item) => (
         <a

@@ -1,10 +1,14 @@
 @layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
   body {
-    font-family: var(--font-primary, system-ui, sans-serif);
+    @apply bg-background text-foreground;
   }
 
   :focus-visible {
-    @apply outline-2 outline-offset-2 outline-[var(--accent)];
+    @apply outline-2 outline-offset-2 outline-primary;
   }
 
   :disabled {

@@ -2,7 +2,7 @@
 import type { GetStaticPathsOptions } from "astro";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import SEO from "@/components/SEO.astro";
-import PageHeader from "@/components/PageHeader.astro";
+import ContentHeader from "@/components/ContentHeader.astro";
 import PostList from "@/components/PostList.astro";
 import Pagination from "@/components/Pagination.astro";
 import { getPublishedPosts } from "@/utils/content.utils";
@@ -24,11 +24,11 @@ const isFirst = page.currentPage === 1;
     description={isFirst ? "All posts" : `Page ${page.currentPage} of ${page.lastPage}`}
   />
 
-  <PageHeader title="Articles">
+  <ContentHeader title="Articles">
     {page.lastPage > 1 && (
       <span slot="meta">Page {page.currentPage} of {page.lastPage}</span>
     )}
-  </PageHeader>
+  </ContentHeader>
 
   <PostList posts={page.data} />
 

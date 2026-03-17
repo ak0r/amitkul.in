@@ -1,5 +1,3 @@
-import mdx from "@astrojs/mdx";
-
 export interface NavItem {
   title: string;
   url: string;

@@ -1,12 +1,12 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import SEO from "@/components/SEO.astro";
-import PageHeader from "@/components/PageHeader.astro";
+import ContentHeader from "@/components/ContentHeader.astro";
 import PagefindSearch from "@/components/Search.astro";
 ---
 
 <BaseLayout>
   <SEO slot="seo" title="Search" description="Search all posts" noindex={true} />
-  <PageHeader title="Search" />
+  <ContentHeader title="Search" />
   <PagefindSearch />
 </BaseLayout>

@@ -15,171 +15,39 @@ const next = currentIndex < posts.length - 1 ? posts[currentIndex + 1] : null;
 
 <nav class="series-nav" aria-label="Series navigation">
   <details>
-    <summary class="series-summary">
-      <span class="series-label">Series</span>
-      <span class="series-title">{current.data.series}</span>
-      <span class="series-count">{currentIndex + 1} of {posts.length}</span>
+    <summary class="series-nav__summary">
+      <span class="series-nav__label">Series</span>
+      <span class="series-nav__title">{current.data.series}</span>
+      <span class="series-nav__count">{currentIndex + 1} of {posts.length}</span>
     </summary>
 
-    <ol class="series-list">
+    <ol class="series-nav__list">
       {posts.map((post) => (
-        <li class:list={["series-item", { "is-current": post.id === current.id }]}>
+        <li class:list={["series-nav__item", { "series-nav__item--current": post.id === current.id }]}>
           {post.id === current.id ? (
-            <span class="series-item-title">{post.data.title}</span>
+            <span class="series-nav__item-title">{post.data.title}</span>
           ) : (
-            <a href={`/posts/${post.id}`} class="series-item-title">{post.data.title}</a>
+            <a href={`/posts/${post.id}`} class="series-nav__item-title">{post.data.title}</a>
           )}
         </li>
       ))}
     </ol>
 
     {(prev || next) && (
-      <div class="series-pagination">
+      <div class="series-nav__pagination">
         {prev && (
-          <a href={`/posts/${prev.id}`} class="series-link series-link--prev">
-            <span class="series-link-label">← Previous</span>
-            <span class="series-link-title">{prev.data.title}</span>
+          <a href={`/posts/${prev.id}`} class="series-nav__link series-nav__link--prev">
+            <span class="series-nav__link-label">← Previous</span>
+            <span class="series-nav__link-title">{prev.data.title}</span>
           </a>
         )}
         {next && (
-          <a href={`/posts/${next.id}`} class="series-link series-link--next">
-            <span class="series-link-label">Next →</span>
-            <span class="series-link-title">{next.data.title}</span>
+          <a href={`/posts/${next.id}`} class="series-nav__link series-nav__link--next">
+            <span class="series-nav__link-label">Next →</span>
+            <span class="series-nav__link-title">{next.data.title}</span>
           </a>
         )}
       </div>
     )}
   </details>
 </nav>
-
-<style>
-  .series-nav {
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    margin-block: 2.5rem;
-  }
-
-  /* ── Summary (always visible) ────────────────────────── */
-  .series-summary {
-    display: flex;
-    align-items: baseline;
-    gap: 0.5rem;
-    flex-wrap: wrap;
-    padding: 1rem 1.25rem;
-    cursor: pointer;
-    list-style: none;
-    user-select: none;
-
-    /* Remove default marker */
-    &::-webkit-details-marker { display: none; }
-    &::marker { display: none; }
-
-    &:hover .series-title {
-      text-decoration: underline;
-      text-decoration-style: dotted;
-      text-underline-offset: 2px;
-    }
-  }
-
-  .series-label {
-    font-size: var(--text-xs);
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: var(--foreground-subtle);
-    flex-shrink: 0;
-  }
-
-  .series-title {
-    font-weight: 500;
-    font-size: var(--text-sm);
-    flex: 1;
-  }
-
-  .series-count {
-    font-size: var(--text-xs);
-    color: var(--foreground-subtle);
-    flex-shrink: 0;
-  }
-
-  /* ── Expanded content ────────────────────────────────── */
-  .series-list {
-    list-style: none;
-    padding: 0 1.25rem 1rem;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
-    counter-reset: series-counter;
-    border-top: 1px solid var(--border);
-    padding-top: 1rem;
-  }
-
-  .series-item {
-    counter-increment: series-counter;
-    display: flex;
-    align-items: baseline;
-    gap: 0.5rem;
-    font-size: var(--text-sm);
-
-    &::before {
-      content: counter(series-counter) ".";
-      color: var(--foreground-subtle);
-      font-size: var(--text-xs);
-      flex-shrink: 0;
-      width: 1.5rem;
-    }
-  }
-
-  .series-item-title {
-    text-decoration: none;
-    color: var(--foreground);
-
-    &:hover {
-      text-decoration: underline;
-      text-underline-offset: 2px;
-    }
-  }
-
-  .series-item a::after,
-  .series-link::after {
-    content: none !important;
-  }
-
-  .is-current .series-item-title {
-    color: var(--foreground-subtle);
-    font-style: italic;
-  }
-
-  .series-pagination {
-    display: flex;
-    gap: 1rem;
-    border-top: 1px solid var(--border);
-    padding: 1rem 1.25rem;
-    margin-top: 0.5rem;
-  }
-
-  .series-link {
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
-    flex: 1;
-    text-decoration: none;
-
-    &:hover .series-link-title {
-      text-decoration: underline;
-      text-underline-offset: 2px;
-    }
-  }
-
-  .series-link--next { text-align: right; }
-
-  .series-link-label {
-    font-size: var(--text-xs);
-    color: var(--foreground-subtle);
-  }
-
-  .series-link-title {
-    font-size: var(--text-sm);
-    color: var(--foreground);
-  }
-</style>

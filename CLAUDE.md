@@ -126,7 +126,7 @@ Each component is self-contained with its own semantic class.
 - `Header.astro` — sticky nav, theme toggle, mobile hamburger; owns theme/mobile toggle scripts
 - `Footer.astro` — copyright + social links from siteConfig
 - `Container.astro` — responsive width wrapper; props: `setWidth` (sm/md/lg/xl/2xl), `class`
-- `PageHeader.astro` — `<h1>` title + optional meta slot; `pagefind` prop for data-pagefind-meta
+- `ContentHeader.astro` — `<h1>` title + optional meta slot; `pagefind` prop for data-pagefind-meta; styles in `components.css` (`.content-header`)
 - `SEO.astro` — meta/og/twitter tags; props: title, description, type, publishedTime, tags, image, noindex
 - `ThemeInit.astro` — inline FOUC-prevention script; reads localStorage → prefers-color-scheme → sets `.dark`
 - `PostMeta.astro` — post date, reading time, tags

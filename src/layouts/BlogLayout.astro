@@ -65,25 +65,28 @@ const galleryImages = getGalleryImages(entry.filePath);
   </ContentHeader>
 
   <Fragment>
-    <meta data-pagefind-sort="date[content]" content={published.toISOString()} />
-    <meta data-pagefind-filter="collection[content]" content="posts" />
-    {tags && tags.map((tag) => (
-      <meta data-pagefind-filter="tag[content]" content={tag} />
-    ))}
+    <aside data-pagefind-body>
+      <meta data-pagefind-meta="title[content]" content={entry.data.title} />
+      <meta data-pagefind-sort="date[content]" content={published.toISOString()} />
+      <meta data-pagefind-filter="collection[content]" content={category} />
+      {tags && tags.map((tag) => (
+        <meta data-pagefind-filter="tag[content]" content={tag} />
+      ))}
 
-    {cover && (
-      <figure class="post-cover">
-        <img src={cover} alt={title} />
-      </figure>
-    )}
+      {cover && (
+        <figure class="post-cover">
+          <img src={cover} alt={title} />
+        </figure>
+      )}
 
-    <section class="post-content" data-pagefind-body role="article">
-      <slot />
-    </section>
-    
-    {galleryImages.length > 0 && (
-      <PostGallery images={galleryImages} galleryId={entry.id} />
-    )}
+      <section class="post-content" role="article">
+        <slot />
+      </section>
+      
+      {galleryImages.length > 0 && (
+        <PostGallery images={galleryImages} galleryId={entry.id} />
+      )}
+    </aside>
   </Fragment>
 
   <Fragment slot="navigation">

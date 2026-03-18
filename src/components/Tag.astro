@@ -16,7 +16,7 @@ interface Props {
 const { tag, count } = Astro.props;
 ---
 
-<a href={`/tags/${tag}`} class="tag badge-outline">
+<a href={`/tags/${tag}`} class="tag">
   <span>#{tag}</span>
   {count !== undefined && (
     <span class="tag-count">({count})</span>

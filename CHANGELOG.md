@@ -4,6 +4,35 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## 0.3.0 - 2026-03-18
+
+### Added
+
+- Anthropic Slate scale (`--color-slate-000` through `--color-slate-1000`) in `tokens.css` — raw color primitives used as theme token inputs
+- Muul semantic token system in `theme.css`: three-tier tokens for background (`--background`, `--background-subtle`, `--background-minimal`), foreground (`--foreground`, `--foreground-subtle`, `--foreground-minimal`), border (`--border`, `--border-subtle`, `--border-minimal`), and accent (`--accent`, `--accent-subtle`, `--accent-minimal`)
+- All semantic tokens resolve via native CSS `light-dark()` — no separate `:root` / `.dark` overrides required
+
+### Changed
+
+- `tokens.css` expanded: previously only held layout scale and named accent colors; now also contains the full Anthropic Slate primitive scale and system colors (`--color-focus`, `--color-error`)
+- `theme.css` fully rewritten: replaced BasecoatUI shadcn-style dual-block (`:root` + `.dark {}`) with a single `:root` block using `light-dark()` for every semantic token; `@theme inline` block trimmed to Muul tokens only
+- Dark mode mechanism changed from `.dark` class on `<html>` to `style.colorScheme` property on `:root` (`document.documentElement.style.colorScheme = 'dark' | 'light'`)
+- `ThemeInit.astro` updated: sets `style.colorScheme` instead of toggling `.dark` class
+- `Header.astro` theme toggle updated: reads/writes `style.colorScheme` instead of `classList`
+- `components.css` + `typography.css` token sweep: `text-muted-foreground` → `text-foreground-subtle`, `bg-muted` → `bg-background-subtle`, `text-secondary-foreground` → `text-foreground-subtle`
+- `components.css` raw var sweep: `var(--muted-foreground)` → `var(--foreground-subtle)`, `var(--color-muted-foreground)` → `var(--color-foreground-subtle)`, `var(--color-travel)` → `var(--color-olive)`, `var(--color-tech)` → `var(--color-sky)`, gallery focus outline changed from `var(--accent)` → `var(--color-focus)`
+- Icon visibility selectors updated: `html.dark .icon-*` → `:root[style*="dark"] .icon-*`
+- `base.css` rewritten: removed BasecoatUI-sourced `* { @apply border-border outline-ring/50; }` universal reset; focus ring now uses `var(--color-focus)` directly instead of `@apply outline-primary`
+- `Tag.astro` no longer applies `badge-outline` class (BasecoatUI-specific utility)
+
+### Removed
+
+- `basecoat-css` npm dependency
+- All BasecoatUI-specific tokens: `--card`, `--popover`, `--primary`, `--secondary`, `--muted`, `--destructive`, `--input`, `--ring`, `--chart-1` through `--chart-5`, `--sidebar-*` family
+- `@custom-variant dark` declaration
+- Tailwind bridge entries for all removed tokens
+- `--color-travel` and `--color-tech` aliases in `@theme inline` (replaced by direct `--color-olive` and `--color-sky` references)
+
 ## 0.2.0 - 2026-03-17
 
 ### Added

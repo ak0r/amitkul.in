@@ -43,18 +43,18 @@
   small      { @apply text-sm; }
 
   code {
-    @apply font-mono text-sm px-1 py-0.5 bg-muted rounded-sm;
+    @apply font-mono text-sm px-1 py-0.5 bg-background-subtle rounded-sm;
   }
 
   pre {
-    @apply text-sm font-mono p-4 mb-4 bg-muted rounded-sm overflow-x-auto;
+    @apply text-sm font-mono p-4 mb-4 bg-background-subtle rounded-sm overflow-x-auto;
     code {
       @apply p-0 bg-transparent rounded-none;
     }
   }
 
   blockquote {
-    @apply border-l-[3px] border-border p-4 my-6 italic bg-muted rounded-lg;
+    @apply border-l-[3px] border-border p-4 my-6 italic bg-background-subtle rounded-lg;
   }
 
   hr {
@@ -77,7 +77,7 @@
   thead { @apply border-b border-border; }
 
   th {
-    @apply py-3 px-2 text-left font-medium text-muted-foreground bg-muted;
+    @apply py-3 px-2 text-left font-medium text-foreground-subtle bg-background-subtle;
   }
 
   td { @apply py-3 px-2; }
@@ -88,7 +88,7 @@
   }
 
   mark {
-    @apply bg-muted p-1 rounded-sm;
+    @apply bg-background-subtle p-1 rounded-sm;
   }
 }
 

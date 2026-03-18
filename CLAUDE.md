@@ -1,7 +1,7 @@
 # CLAUDE.md
 
 ## Project
-Astro blog template port. Tailwind + BasecoatUI for components.
+Astro blog template port. Tailwind + Muul semantic token system for styling.
 Minimal, Muul-philosophy: simple, composable, no bloat.
 
 ## Commands
@@ -52,14 +52,14 @@ The default (unnamed) slot in `BaseLayout` is for pages that manage their own la
 
 ### Styling
 
-CSS entry point: `src/styles/global.css` imports TailwindCSS v4, `basecoat-css`, then project files:
-- `tokens.css` — layout tokens (`--width-container`, `--width-prose`)
-- `theme.css` — color tokens for light/dark mode + Tailwind theme bridge
+CSS entry point: `src/styles/global.css` imports TailwindCSS v4, then project files:
+- `tokens.css` — Anthropic Slate primitive scale, named accent palette, system colors (`--color-focus`, `--color-error`), layout scale (`--width-container`, `--width-prose`)
+- `theme.css` — Muul semantic tokens using native `light-dark()` (background, foreground, border, accent tiers) + `@theme inline` Tailwind bridge
 - `base.css` — structural defaults: body font, focus ring, disabled state
 - `typography.css` — all prose element defaults (`@layer base`) + `.post-content` overrides (`@layer components`)
 - `components.css` — shared component styles
 
-Dark mode uses `.dark` class on the body (toggled via `ThemeInit.astro` to prevent FOUC). Expressive Code (syntax highlighting) uses `everforest-dark`/`everforest-light` themes tied to `[data-theme]` attribute.
+Dark mode uses `color-scheme` property on `:root` (set via `ThemeInit.astro` to prevent FOUC). Expressive Code (syntax highlighting) uses `everforest-dark`/`everforest-light` themes tied to `[data-theme]` attribute.
 
 Fonts (via Astro font API / Fontsource): `--font-headings` (Rubik), `--font-primary` (Poppins), `--font-secondary` (Newsreader), `--font-code` (Fira Code).
 
@@ -128,7 +128,7 @@ Each component is self-contained with its own semantic class.
 - `Container.astro` — responsive width wrapper; props: `setWidth` (sm/md/lg/xl/2xl), `class`
 - `ContentHeader.astro` — `<h1>` title + optional meta slot; `pagefind` prop for data-pagefind-meta; styles in `components.css` (`.content-header`)
 - `SEO.astro` — meta/og/twitter tags; props: title, description, type, publishedTime, tags, image, noindex
-- `ThemeInit.astro` — inline FOUC-prevention script; reads localStorage → prefers-color-scheme → sets `.dark`
+- `ThemeInit.astro` — inline FOUC-prevention script; reads localStorage → prefers-color-scheme → sets `style.colorScheme`
 - `PostMeta.astro` — post date, reading time, tags
 - `PostItem.astro` — single post card/list entry
 - `PostList.astro` — renders a list of PostItems

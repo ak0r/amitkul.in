@@ -18,6 +18,8 @@ const { post } = Astro.props;
 ---
 
 <div class="post-item">
-  <a href={`/posts/${post.id}`} class="post-item-link">{post.data.title}</a>
+  <a href={`/posts/${post.id}`} class="post-item-link">
+    {post.data.title}
+  </a>
   <PostMeta published={post.data.published} />
 </div>

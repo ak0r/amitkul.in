@@ -15,10 +15,18 @@ interface Props {
 }
 
 const { category } = Astro.props;
+
+const colorMap: Record<string, string> = {
+  travel: 'badge--clay',
+  tech:   'badge--sky',
+};
 ---
 
 {category && (
-  <span class={`post-category-tag post-category-tag--${category}`} aria-label={`Content category: ${category}`}>
+  <span
+    class={`badge badge--subtle ${colorMap[category]}`}
+    aria-label={`Content category: ${category}`}
+  >
     {category}
   </span>
 )}

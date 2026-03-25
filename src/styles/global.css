@@ -3,5 +3,7 @@
 @import "./tokens.css";
 @import "./theme.css";
 @import "./base.css";
+@import "./primitives.css";
+@import "./layout.css";
 @import "./components.css";
 @import "./typography.css";

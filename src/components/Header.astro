@@ -34,7 +34,7 @@ const contentWidth = siteConfig.pageWidth || 'lg';
       <div class="site-header__end">
         <button
           id="theme-toggle"
-          class="theme-toggle"
+          class="btn btn--ghost btn--icon"
           aria-label="Toggle theme"
           title="Toggle light/dark theme"
         >
@@ -49,18 +49,24 @@ const contentWidth = siteConfig.pageWidth || 'lg';
 
         <button
           id="nav-toggle"
-          class="site-header__mobile-toggle"
+          class="btn btn--ghost btn--icon"
           aria-label="Toggle menu"
           aria-expanded="false"
           aria-controls="nav-mobile"
-        >☰</button>
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="4" x2="20" y1="6" y2="6"/>
+            <line x1="4" x2="20" y1="12" y2="12"/>
+            <line x1="4" x2="20" y1="18" y2="18"/>
+          </svg>
+        </button>
       </div>
     </nav>
   </Container>
 
   <!-- Mobile dropdown -->
   <div id="nav-mobile" class="site-header__mobile" hidden>
-    <div class="container">
+    <div class="site-header__mobile-inner">
       {siteConfig.navigation.map((item) => (
         <a
           href={item.url}
@@ -81,11 +87,36 @@ const contentWidth = siteConfig.pageWidth || 'lg';
     try { localStorage.setItem('theme', isDark ? 'dark' : 'light'); } catch (_) {}
   });
 
-  const navToggle = document.getElementById('nav-toggle');
-  const navMobile = document.getElementById('nav-mobile');
-  navToggle?.addEventListener('click', () => {
-    const hidden = navMobile?.hasAttribute('hidden');
-    navMobile?.toggleAttribute('hidden', !hidden);
-    navToggle.setAttribute('aria-expanded', String(!!hidden));
-  });
+  function initMobileNav() {
+    const navToggle = document.getElementById('nav-toggle');
+    const navMobile = document.getElementById('nav-mobile');
+    if (!navToggle || !navMobile) return;
+
+    // Toggle open/close
+    navToggle.addEventListener('click', () => {
+      const isHidden = navMobile.hasAttribute('hidden');
+      navMobile.toggleAttribute('hidden', !isHidden);
+      navToggle.setAttribute('aria-expanded', String(isHidden));
+    });
+
+    // Close when a nav link is clicked (SPA navigation)
+    navMobile.querySelectorAll('.nav-link').forEach((link) => {
+      link.addEventListener('click', () => {
+        navMobile.setAttribute('hidden', '');
+        navToggle.setAttribute('aria-expanded', 'false');
+      });
+    });
+
+    // Close on resize to desktop
+    const mq = window.matchMedia('(min-width: 641px)');
+    mq.addEventListener('change', (e) => {
+      if (e.matches) {
+        navMobile.setAttribute('hidden', '');
+        navToggle.setAttribute('aria-expanded', 'false');
+      }
+    });
+  }
+
+  initMobileNav();
+  document.addEventListener('astro:after-swap', initMobileNav);
 </script>

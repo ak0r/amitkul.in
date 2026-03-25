@@ -23,7 +23,7 @@ const next = currentIndex < posts.length - 1 ? posts[currentIndex + 1] : null;
 
     <ol class="series-nav__list">
       {posts.map((post) => (
-        <li class:list={["series-nav__item", { "series-nav__item--current": post.id === current.id }]}>
+        <li class:list={["card card--interactive card--padded series-nav__item", { "series-nav__item--current": post.id === current.id }]}>
           {post.id === current.id ? (
             <span class="series-nav__item-title">{post.data.title}</span>
           ) : (

@@ -19,8 +19,8 @@ const { post } = Astro.props;
 const { category } = post.data;
 ---
 
-<div class="post-item card">
-  <a href={`/posts/${post.id}`} class="post-item-link">
+<div class="card card--interactive card--padded post-item">
+  <a href={`/posts/${post.id}`} class="post-item__link">
     {post.data.title}
   </a>
   <div class="post-item__meta">

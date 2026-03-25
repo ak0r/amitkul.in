@@ -1,0 +1,162 @@
+@layer components {
+  /* ── Header / Nav ───────────────────────────────── */
+  .site-header {
+    @apply sticky top-0 z-[100] border-b border-border-subtle bg-background;
+
+    /* Scroll shadow via animation-timeline — appears after ~1px scroll */
+    animation: header-shadow linear both;
+    animation-timeline: scroll();
+    animation-range: 0px 1px;
+  }
+
+  @keyframes header-shadow {
+    from { box-shadow: none; }
+    to   { box-shadow: 0 1px 12px 0 color-mix(in srgb, var(--foreground) 8%, transparent); }
+  }
+
+  .site-header__nav {
+    @apply flex items-center justify-between py-3 gap-4;
+  }
+
+  .site-header__brand {
+    font-family: var(--font-headings);
+    @apply text-2xl font-semibold no-underline text-foreground shrink-0;
+    &:hover { @apply opacity-80; }
+    &::after { content: none !important; }
+  }
+
+  .site-header__desktop {
+    @apply flex items-center gap-4;
+  }
+
+  .site-header__end {
+    @apply flex items-center gap-1;
+  }
+
+  /* Hamburger — hidden on desktop, shown on mobile */
+  #nav-toggle {
+    @apply hidden;
+  }
+
+  .site-header__mobile {
+    @apply border-t border-border bg-background;
+    /* Slide-down entrance */
+    animation: mobile-menu-in 150ms ease both;
+  }
+
+  @keyframes mobile-menu-in {
+    from { opacity: 0; transform: translateY(-4px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .site-header__mobile-inner {
+    @apply flex flex-col px-4 py-4 gap-1;
+  }
+
+  .site-header__mobile .nav-link {
+    @apply text-base py-2.5 px-3 rounded-lg w-full;
+    &:hover          { @apply bg-background-subtle text-foreground; }
+    &[aria-current]  { @apply bg-background-subtle text-foreground font-medium; }
+  }
+
+  /* Icon visibility: moon in light mode, sun in dark mode */
+  .icon-sun  { @apply hidden; }
+  .icon-moon { @apply block; }
+
+  :root[style*="dark"] .icon-sun  { @apply block; }
+  :root[style*="dark"] .icon-moon { @apply hidden; }
+
+  @media (max-width: 640px) {
+    .site-header__desktop { @apply hidden; }
+    #nav-toggle           { @apply inline-flex; }
+  }
+
+  /* ── Nav links ───────────────────────────────────── */
+  .nav-link {
+    @apply text-sm no-underline text-foreground-subtle;
+    &:hover { @apply text-foreground; }
+    &[aria-current="page"] { @apply text-foreground; }
+    &::after { content: none !important; }
+  }
+
+  /* ── Footer ─────────────────────────────────────── */
+  .footer {
+    @apply border-t border-border-subtle py-8;
+  }
+
+  .footer-inner {
+    @apply flex items-center justify-between gap-4;
+  }
+
+  .footer-copy {
+    @apply text-sm text-foreground-subtle m-0;
+  }
+
+  .footer-nav {
+    @apply flex gap-4;
+  }
+
+  /* ── Pagination ──────────────────────────────────── */
+  .pagination {
+    @apply flex items-center justify-between pt-8 mt-4 border-t border-border;
+  }
+
+  .pagination__link {
+    @apply text-sm no-underline text-foreground;
+    &:hover {
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+    &::after { content: none !important; }
+  }
+
+  .pagination__link--disabled {
+    @apply text-foreground-subtle cursor-default pointer-events-none;
+  }
+
+  .pagination__info {
+    @apply text-xs text-foreground-subtle;
+  }
+
+  /* ── Breadcrumb ──────────────────────────────────── */
+  .breadcrumb {
+    @apply mb-8 font-mono;
+  }
+
+  .breadcrumb__list {
+    @apply flex items-center flex-wrap gap-1 list-none p-0 m-0;
+  }
+
+  .breadcrumb__item {
+    @apply flex items-center gap-1 text-sm text-foreground-subtle;
+  }
+
+  .breadcrumb__link {
+    @apply text-foreground-subtle no-underline;
+    &:hover { @apply text-foreground; }
+    &::after { content: none !important; }
+  }
+
+  .breadcrumb__sep {
+    @apply text-foreground-minimal select-none;
+  }
+
+  .breadcrumb__current {
+    @apply text-foreground-subtle font-bold;
+  }
+
+  /* ── Scroll To Top ───────────────────────────────── */
+  .scroll-to-top {
+    @apply fixed bottom-6 right-6 z-50
+           flex items-center justify-center
+           w-9 h-9 rounded-full
+           bg-background border border-border
+           text-foreground-subtle
+           shadow-sm cursor-pointer
+           transition-all duration-200;
+    &:hover {
+      @apply text-foreground border-border-subtle shadow-md -translate-y-0.5;
+    }
+    &[hidden] { @apply hidden; }
+  }
+}

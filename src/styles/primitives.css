@@ -1,0 +1,145 @@
+@layer components {
+  /* ── Badge ───────────────────────────────────────────
+     Composable inline label primitive.
+     Combine variant + color modifier:
+       .badge.badge--subtle.badge--olive
+       .badge.badge--ghost.badge--accent
+       .badge.badge--outline.badge--sky
+  ──────────────────────────────────────────────────── */
+  .badge {
+    @apply inline-flex items-center gap-1 rounded-full text-xs font-medium;
+  }
+
+  /* Variants */
+  .badge--subtle {
+    @apply px-2 py-0.5;
+  }
+
+  .badge--outline {
+    @apply px-2 py-0.5 border;
+  }
+
+  .badge--ghost {
+    @apply px-0 py-0;
+  }
+
+  /* Color modifiers — work with any variant */
+  .badge--accent {
+    color: var(--accent);
+  }
+  .badge--subtle.badge--accent {
+    background: color-mix(in srgb, var(--accent) 25%, transparent);
+  }
+  .badge--outline.badge--accent {
+    border-color: color-mix(in srgb, var(--accent) 40%, transparent);
+  }
+
+  .badge--olive {
+    color: var(--color-olive);
+  }
+  .badge--subtle.badge--olive {
+    background: color-mix(in srgb, var(--color-olive) 25%, transparent);
+  }
+  .badge--outline.badge--olive {
+    border-color: color-mix(in srgb, var(--color-olive) 40%, transparent);
+  }
+
+  .badge--sky {
+    color: var(--color-sky);
+  }
+  .badge--subtle.badge--sky {
+    background: color-mix(in srgb, var(--color-sky) 25%, transparent);
+  }
+  .badge--outline.badge--sky {
+    border-color: color-mix(in srgb, var(--color-sky) 40%, transparent);
+  }
+
+  .badge--clay {
+    color: var(--color-clay);
+  }
+  .badge--subtle.badge--clay {
+    background: color-mix(in srgb, var(--color-clay) 25%, transparent);
+  }
+  .badge--outline.badge--clay {
+    border-color: color-mix(in srgb, var(--color-clay) 40%, transparent);
+  }
+
+  .badge--oat {
+    color: var(--color-oat);
+  }
+  .badge--subtle.badge--oat {
+    background: color-mix(in srgb, var(--color-oat) 25%, transparent);
+  }
+  .badge--outline.badge--oat {
+    border-color: color-mix(in srgb, var(--color-oat) 40%, transparent);
+  }
+
+  .badge__count {
+    @apply text-foreground-minimal;
+  }
+
+  /* ── Button ──────────────────────────────────────────
+     Composable interactive element primitive.
+     Combine variant + size:
+       .btn.btn--ghost.btn--icon
+       .btn.btn--subtle.btn--md
+       .btn.btn--solid.btn--sm
+  ──────────────────────────────────────────────────── */
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-full
+           font-medium transition-colors duration-200 cursor-pointer
+           select-none shrink-0;
+  }
+
+  /* Variants */
+  .btn--ghost {
+    @apply text-foreground-subtle bg-transparent;
+    &:hover  { @apply text-foreground bg-background-subtle; }
+    &:active { @apply bg-background-minimal; }
+  }
+
+  .btn--subtle {
+    @apply text-foreground bg-background-subtle;
+    &:hover  { @apply bg-background-minimal; }
+    &:active { @apply bg-background-minimal; }
+  }
+
+  .btn--solid {
+    background: var(--accent);
+    @apply text-background;
+    &:hover  { @apply opacity-85; }
+    &:active { @apply opacity-75; }
+  }
+
+  /* Sizes */
+  .btn--sm   { @apply h-7 px-2.5 text-xs; }
+  .btn--md   { @apply h-9 px-3 text-sm; }
+  .btn--icon { @apply h-9 w-9 p-0; }
+
+  /* ── Card ────────────────────────────────────────────
+     Composable surface primitive.
+     Combine variant modifiers:
+       .card.card--interactive.card--padded
+       .card.card--flat
+  ──────────────────────────────────────────────────── */
+  .card {
+    @apply bg-background-subtle rounded-lg transition-all duration-200;
+  }
+
+  .card--interactive {
+    &:hover {
+      @apply bg-background-minimal shadow-sm;
+    }
+    &:active {
+      @apply shadow-none;
+    }
+  }
+
+  .card--flat {
+    /* Surface only — no hover state */
+  }
+
+  .card--padded {
+    @apply p-3 sm:p-4;
+  }
+}

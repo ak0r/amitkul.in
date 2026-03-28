@@ -1,0 +1,83 @@
+name: Receive Vault Sync
+
+on:
+  repository_dispatch:
+    types: [vault-sync]
+
+jobs:
+  receive:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout astro-base
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          submodules: true      # checks out vault submodule too
+          fetch-depth: 0        # full history needed for diff
+
+      - name: Get previous and incoming submodule SHA
+        id: shas
+        run: |
+          # SHA before submodule update (last synced state)
+          PREV_SHA=$(git -C src/content rev-parse HEAD)
+          echo "prev_sha=$PREV_SHA" >> $GITHUB_OUTPUT
+          echo "Previous submodule SHA: $PREV_SHA"
+
+          # SHA dispatched from vault (the [sync] commit)
+          INCOMING_SHA="${{ github.event.client_payload.sha }}"
+          echo "incoming_sha=$INCOMING_SHA" >> $GITHUB_OUTPUT
+          echo "Incoming SHA: $INCOMING_SHA"
+
+      - name: Check if SHAs differ
+        id: sha_diff
+        run: |
+          if [ "${{ steps.shas.outputs.prev_sha }}" = "${{ steps.shas.outputs.incoming_sha }}" ]; then
+            echo "changed=false" >> $GITHUB_OUTPUT
+            echo "Submodule already at this SHA. Skipping."
+          else
+            echo "changed=true" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Check if any .md files changed between SHAs
+        id: md_check
+        if: steps.sha_diff.outputs.changed == 'true'
+        run: |
+          PREV="${{ steps.shas.outputs.prev_sha }}"
+          INCOMING="${{ steps.shas.outputs.incoming_sha }}"
+
+          MD_FILES=$(git -C src/content diff --name-only "$PREV".."$INCOMING" -- '*.md')
+          echo "Changed .md files:"
+          echo "$MD_FILES"
+
+          if [ -z "$MD_FILES" ]; then
+            echo "has_md=false" >> $GITHUB_OUTPUT
+            echo "No .md files changed between SHAs. Skipping."
+          else
+            echo "has_md=true" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Update submodule pointer to incoming SHA
+        if: |
+          steps.sha_diff.outputs.changed == 'true' &&
+          steps.md_check.outputs.has_md == 'true'
+        run: |
+          git -C src/content fetch origin
+          git -C src/content checkout ${{ steps.shas.outputs.incoming_sha }}
+          echo "Submodule updated to ${{ steps.shas.outputs.incoming_sha }}"
+
+      - name: Commit and push updated submodule pointer
+        if: |
+          steps.sha_diff.outputs.changed == 'true' &&
+          steps.md_check.outputs.has_md == 'true'
+        run: |
+          git config user.name "vault-sync[bot]"
+          git config user.email "vault-sync@users.noreply.github.com"
+          git add src/content
+
+          if git diff --cached --quiet; then
+            echo "No submodule pointer change to commit."
+          else
+            git commit -m "[sync] vault → ${{ steps.shas.outputs.incoming_sha }}"
+            git push
+          fi

@@ -8,7 +8,7 @@ import { siteConfig } from "@/site.config";
 import { getPublishedPosts } from "@/utils/content.utils";
 
 const homeEntry = await getEntry("pages", "home");
-const { Content } = await render(homeEntry);
+const Content = homeEntry ? (await render(homeEntry)).Content : null;
 
 const allPosts = await getPublishedPosts();
 const recent = allPosts.slice(0, siteConfig.recentPosts);
@@ -21,7 +21,7 @@ const recent = allPosts.slice(0, siteConfig.recentPosts);
   <h1 class="sr-only">{siteConfig.title}</h1>
 
   <section class="home-intro" data-pagefind-ignore>
-    <Content />
+    {Content ? <Content /> : null}
   </section>
 
   <section>

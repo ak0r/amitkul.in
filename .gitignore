@@ -29,3 +29,8 @@ public/pagefind/*
 
 #Claude
 .claude/
+
+# Local content , copied for testing. Actual content is synced via submodule
+src/content/posts/*
+src/content/pages/*
+!src/content/.git

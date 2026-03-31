@@ -3,6 +3,7 @@ name: Receive Vault Sync
 on:
   repository_dispatch:
     types: [vault-sync]
+  workflow_dispatch:
 
 jobs:
   receive:

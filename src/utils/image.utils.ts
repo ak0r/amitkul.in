@@ -27,12 +27,12 @@ export interface GalleryImage {
 // ============================================================================
 
 const allGalleryImages = import.meta.glob<{ default: ImageMetadata }>(
-  '/src/content/posts/**/gallery/*.{jpg,jpeg,png,webp,avif,gif,JPG,JPEG,PNG,WEBP}',
+  '/src/content/**/gallery/*.{jpg,jpeg,png,webp,avif,gif,JPG,JPEG,PNG,WEBP}',
   { eager: true }
 );
 
 const allAttachmentImages = import.meta.glob<{ default: ImageMetadata }>(
-  '/src/content/posts/**/attachments/*.{jpg,jpeg,png,webp,avif,gif,JPG,JPEG,PNG,WEBP}',
+  '/src/content/**/attachments/*.{jpg,jpeg,png,webp,avif,gif,JPG,JPEG,PNG,WEBP}',
   { eager: true }
 );
 
@@ -87,9 +87,9 @@ function vaultPathToGlobKey(vaultPath: string): string {
   // Already a glob key
   if (vaultPath.startsWith('/src/content/')) return vaultPath;
   // Vault-absolute: posts/...
-  if (vaultPath.startsWith('posts/')) return `/src/content/${vaultPath}`;
+  if (vaultPath.startsWith('travels/')) return `/src/content/${vaultPath}`;
   // Fallback
-  return `/src/content/posts/${vaultPath}`;
+  return `/src/content/${vaultPath}`;
 }
 
 // ============================================================================
@@ -100,8 +100,8 @@ function vaultPathToGlobKey(vaultPath: string): string {
  * Resolve a post's cover frontmatter value to ImageMetadata.
  *
  * Accepts vault-absolute Obsidian paths with or without [[ ]] brackets:
- *   [[posts/2011-03-21-bhuleshwar/attachments/image.jpg]]
- *   posts/2011-03-21-bhuleshwar/attachments/image.jpg
+ *   [[travels/2011-03-21-bhuleshwar/attachments/image.jpg]]
+ *   travels/2011-03-21-bhuleshwar/attachments/image.jpg
  *
  * Returns undefined if the path cannot be resolved (allows graceful fallback).
  */
@@ -123,14 +123,14 @@ export function getCoverImage(raw: string | undefined): ImageMetadata | undefine
 
 /**
  * Get gallery images for a post, sorted by filename.
- * Reads from src/content/posts/{postDir}/gallery/
+ * Reads from src/content/travels/{postDir}/gallery/
  */
 export function getGalleryImages(filePath: string): GalleryImage[] {
   const postDir = extractPostDir(filePath);
   if (!postDir) return [];
 
   return Object.entries(allGalleryImages)
-    .filter(([path]) => path.includes(`/posts/${postDir}/gallery/`))
+    .filter(([path]) => path.includes(`/travels/${postDir}/gallery/`))
     .sort(([a], [b]) => a.localeCompare(b))
     .map(([path, mod]) => {
       const filename = path.split('/').pop() ?? '';

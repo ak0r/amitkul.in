@@ -11,14 +11,15 @@ import PostNav from "@/components/PostNav.astro";
 import PostItem from "@/components/PostItem.astro";
 import SeriesNav from "@/components/SeriesNav.astro";
 import CopyMarkdown from "@/components/CopyMarkdown.astro";
-import Icon from "@/components/Icon.astro";
 import {
   getPublishedPosts,
   getSeriesPosts,
   getRelatedPosts,
   calculateReadingTime,
   getPostUrl,
+  getPostSlug,
   toDestinationId,
+  type AnyPost,
 } from "@/utils/content.utils";
 import { getGalleryImages, getCoverImage } from '@/utils/image.utils';
 import PostGallery from '@/components/PostGallery.astro';
@@ -27,10 +28,13 @@ import GalleryInit from '@/components/GalleryInit.astro';
 import Breadcrumb from '@/components/Breadcrumb.astro';
 
 interface Props {
-  entry: CollectionEntry<"posts">;
+  entry: AnyPost;
 }
 
 const { entry } = Astro.props;
+
+const isTravel = entry.collection === 'travel';
+
 const {
   title,
   description,
@@ -39,17 +43,18 @@ const {
   tags,
   cover,
   series,
-  category,
-  countries,   // z.array(z.string()) — plain strings e.g. ["India", "Japan"]
-  region,      // e.g. "Sahyadri"
-  places,      // e.g. ["Rajgad", "Pune"]
 } = entry.data;
 
-// Primary country for display — first in list
+// Travel-only fields
+const countries = isTravel ? (entry as CollectionEntry<'travel'>).data.countries : undefined;
+const region    = isTravel ? (entry as CollectionEntry<'travel'>).data.region    : undefined;
+const places    = isTravel ? (entry as CollectionEntry<'travel'>).data.places    : undefined;
+
+// Primary country for eyebrow display
 const primaryCountry   = countries?.[0] ?? null;
 const primaryCountryId = primaryCountry ? toDestinationId(primaryCountry) : null;
 
-// Resolve destination entry for pagefind meta only
+// Resolve destination entry for pagefind meta only — optional, don't fail build
 const destinationEntry = primaryCountryId
   ? await getEntry('destinations', primaryCountryId).catch(() => null)
   : null;
@@ -58,15 +63,15 @@ const allPosts      = await getPublishedPosts();
 const related       = getRelatedPosts(entry, allPosts, siteConfig.relatedPosts);
 const seriesPosts   = series ? await getSeriesPosts(series) : [];
 const readTime      = calculateReadingTime(entry.body ?? "").text;
-const galleryImages = getGalleryImages(entry.filePath);
+const galleryImages = getGalleryImages(entry.filePath ?? '');
 const coverImage    = getCoverImage(cover);
-const ogImage       = `/og/posts/${entry.id}.png`;
+const ogImage       = `/og/posts/${getPostSlug(entry)}.png`;
 
-const currentIndex = allPosts.findIndex((p) => p.id === entry.id);
+const currentIndex = allPosts.findIndex(
+  (p) => p.id === entry.id && p.collection === entry.collection
+);
 const prev = currentIndex < allPosts.length - 1 ? allPosts[currentIndex + 1] : null;
 const next = currentIndex > 0                   ? allPosts[currentIndex - 1] : null;
-
-const canonicalPath = getPostUrl(entry);
 ---
 
 <BaseLayout>
@@ -84,10 +89,9 @@ const canonicalPath = getPostUrl(entry);
   <Fragment slot="header">
     <Breadcrumb label={title} />
 
-    {/* ── Eyebrow ────────────────────────────────────────────────────────
+    {/* ── Eyebrow — travel posts only ───────────────────
         [India]  Sahyadri
-        Only shown for travel posts with a country set.
-    ─────────────────────────────────────────────────────────────────── */}
+    ─────────────────────────────────────────────────── */}
     {primaryCountry && (
       <div class="post-eyebrow">
         <a
@@ -117,9 +121,9 @@ const canonicalPath = getPostUrl(entry);
 
   <Fragment>
     <aside data-pagefind-body>
-      <meta data-pagefind-meta="title[content]" content={entry.data.title} />
+      <meta data-pagefind-meta="title[content]" content={title} />
       <meta data-pagefind-sort="date[content]" content={published.toISOString()} />
-      <meta data-pagefind-filter="collection[content]" content={category} />
+      <meta data-pagefind-filter="collection[content]" content={entry.collection} />
       {destinationEntry && (
         <meta data-pagefind-filter="destination[content]" content={destinationEntry.data.title} />
       )}

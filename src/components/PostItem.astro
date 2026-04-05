@@ -2,23 +2,33 @@
 /**
  * PostItem — a single post row in a list.
  *
- * Layout:  Title                    March 2nd
+ * Layout:  Title                    [Type/Tech]  March 2nd
  *
- * Date is rendered without year or read time — PostMeta in list mode.
- * Used by PostList internally.
+ * Travel posts: shows post type (Journey, Guide, etc.) in olive
+ * Tech posts:   shows "Tech" in sky
+ * Both use .badge--subtle for consistent visual weight.
  */
-import type { CollectionEntry } from "astro:content";
 import PostMeta from "@/components/PostMeta.astro";
-import PostCategory from "@/components/PostCategory.astro";
-import { getPostUrl } from "@/utils/content.utils";
+import { getPostUrl, type AnyPost } from "@/utils/content.utils";
 
 interface Props {
-  post: CollectionEntry<"posts">;
+  post: AnyPost;
 }
 
 const { post } = Astro.props;
-const { category } = post.data;
 const href = getPostUrl(post);
+
+const isTech   = post.collection === 'tech';
+const postType = !isTech ? (post as any).data.type : undefined;
+
+// Label and color per collection/type
+const badgeLabel = isTech ? 'Tech' : postType
+  ? postType.charAt(0).toUpperCase() + postType.slice(1)
+  : null;
+
+const badgeClass = isTech
+  ? 'badge badge--subtle badge--sky'
+  : 'badge badge--subtle badge--olive';
 ---
 
 <div class="card card--interactive card--padded post-item">
@@ -26,7 +36,9 @@ const href = getPostUrl(post);
     {post.data.title}
   </a>
   <div class="post-item__meta">
-    {category && <PostCategory {category} />}
+    {badgeLabel && (
+      <span class={badgeClass}>{badgeLabel}</span>
+    )}
     <PostMeta published={post.data.published} />
   </div>
 </div>

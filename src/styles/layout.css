@@ -152,7 +152,7 @@
 
   /* ── Breadcrumb ──────────────────────────────────── */
   .breadcrumb {
-    @apply mb-4;
+    @apply mb-6 md:mb-8;
   }
 
   .breadcrumb__list {

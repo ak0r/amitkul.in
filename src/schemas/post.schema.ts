@@ -22,7 +22,7 @@ export const postSchema = baseSchema.extend({
   region:     z.string().optional(),
 
   // ── Post type ───────────────────────────────────────────────────────────
-  type: z.enum(['journey', 'experience', 'guide', 'photowalk', 'notes']).optional(),
+  type: z.enum(['journey', 'experience', 'guide', 'gallery', 'note']).optional(),
 
   // ── Series ──────────────────────────────────────────────────────────────
   series: z.string().optional(),

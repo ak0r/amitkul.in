@@ -42,8 +42,8 @@ export function buildCrumbs(pathname: string, label?: string): Crumb[] {
 
   // ── /travel/* ──────────────────────────────────────────────────────────────
 
-  if (first === 'travel') {
-    crumbs.push({ title: 'Travel', href: '/travel' });
+  if (first === 'travels') {
+    crumbs.push({ title: 'Travels', href: '/travels' });
 
     if (second) {
       // Individual post — label passed from BlogLayout

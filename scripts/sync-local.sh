@@ -7,5 +7,7 @@ CONTENT="src/content"
 rsync -av --delete "$VAULT/destinations/" "$CONTENT/destinations/"
 rsync -av --delete "$VAULT/posts/" "$CONTENT/posts/"
 rsync -av --delete "$VAULT/pages/" "$CONTENT/pages/"
+rsync -av --delete "$VAULT/travels/" "$CONTENT/travels/"
+rsync -av --delete "$VAULT/notes/" "$CONTENT/notes/"
 
 echo "✓ Content synced"

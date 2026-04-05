@@ -38,7 +38,7 @@ export const siteConfig: SiteConfig = {
     },
   ],
   navigation: [
-    { title: "Travel",       url: "/travel" },
+    { title: "Travel",       url: "/travels" },
     { title: "Tech",         url: "/tech" },
     { title: "Destinations", url: "/destinations" },
     { title: "About",        url: "/about" },
